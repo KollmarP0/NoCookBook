@@ -1,0 +1,25 @@
+//Creates a table of all users, keyed off of the user's email
+CREATE TABLE RegUsers (
+	Email varchar(255),
+	Password varchar(255) NOT NULL,
+	PRIMARY KEY (Email)
+);
+//How to insert into the User table
+//Insert the relevant info for all non-null and desired columns
+//This system catches if there is a duplicate email reg
+//This DOES NOT CHECK if the email is valid, or if the password meets any criteria
+INSERT INTO RegUser(Email, Password)
+	VALUES ('Pre-existing Recipe ID','Pre-existing Ingredient');
+
+//When a User is added, they will recieve a fridge
+//If the insertion is successful, a fridge component is created and named after their email
+//ALternitively we could have a user id system, and then pass that as the name of the table, rather than tracking their email
+CREATE TABLE "Ex. Email" (
+	Ingredient varchar(255) NOT NULL,
+	FOREIGN KEY (Ingredient) REFERENCES Ingredients(Ingredient)
+);
+
+//If the the fridge is included in a search, this code is executed to include it
+//This would be executed after criteria was created/recieved, but before the search query is run
+INSERT INTO Criteria
+	SELECT * FROM "Ex. Email";

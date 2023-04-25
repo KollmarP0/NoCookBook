@@ -1,0 +1,37 @@
+//All queries in this section are formatted as stored procedures, meaning that on initialization they are executed to create them
+//They are then called later with "EXEC example_pro" with associated @variables
+
+
+//These create a criteria table and handle insertions into criteria
+//For use, you would sql query create these procedures on server initialization
+//Then, when using a criteria table, you would sql query "EXEC create_criteria;" 
+//Then "EXEC insert_criteria @ingred = '(Ingredient)';" for each ingredient criteria
+
+CREATE PROCEDURE create_criteria
+	AS
+	CREATE TEMPORARY TABLE Criteria (
+		Ingredient varchar(255) NOT NULL,
+		FOREIGN KEY (Ingredient) REFERENCES Ingredients(Ingredient)
+	)
+GO;	
+
+CREATE PROCEDURE insert_criteria @ingred varchar(255)
+	AS
+	INSERT INTO Criteria (Ingredient)
+	VALUES (@ingred)
+GO;
+
+CREATE PROCEDURE inclusive_search
+	SELECT DISTINCT RecipePage FROM ((Recipes
+	INNER JOIN RecipeIngredients ON RecipeName)
+	INNER JOIN Criteria ON Ingredient)
+GO;
+
+CREATE PROCEDURE exclusive_search
+	CREATE TEMPORARY TABLE SearchResults AS
+		SELECT * FROM Recipes INNER JOIN RecipeIngredients ON RecipeName;
+	DELETE FROM SearchResults
+		WHERE NOT RecipeName in 
+		(SELECT DISTINCT RecipeName FROM SearchResults WHERE Ingredient in (SELECT DISTINCT Ingredient FROM Criteria);
+	SELECT RecipePage FROM SearchResults GO;
+

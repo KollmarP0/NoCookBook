@@ -1,0 +1,3 @@
+//Browsing Page UI
+SELECT RecipePage FROM Recipes
+	ORDER BY Rating;

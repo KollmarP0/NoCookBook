@@ -1,0 +1,40 @@
+//The original recipes table
+//Columns subject to review
+//Names are currently unique, can be changed later
+CREATE TABLE Recipes (
+	RecipeName varchar(255),
+	RecipePage varchar(255),
+	Rating DOUBLE(2,1),
+	PRIMARY KEY (RecipeName)
+);
+//How to insert into the recipe table
+//Insert the relevant info for all non-null and desired columns
+//The page does not need to exist for it to be entered into the table, but should be created as part of the code calling this insert
+INSERT INTO Recipes (RecipeName, RecipePage, Rating)
+	VALUES ('ExampleName','(html route)', 0);
+
+//Recipe Ratings table
+//For each recipe, there will be a table of ratings/comments that are associated with that recipe
+//The RecipeReviews tables are given the name of the recipe, to optimize keying
+//Users can submit reviews and this table will store them
+CREATE TABLE (Ex. Recipe Name)(
+	User varchar(255),
+	Rating Double (2,1) NOT NULL,
+	Comments varchar(255),
+	PRIMARY KEY (User),
+	FOREIGN KEY (User) REFERENCES RegUsers(Email)
+)
+
+//To Insert a rating, use this command Always Followed By An Update To The Rating of the Parent Recipe
+INSERT INTO (Ex. Recipe Name) (User, Rating, Comments)
+	VALUES ('User entering review',(an X.Y number, like 2.5), Comment not exceeding 255 characters);
+
+//Update to Parent Recipe
+UPDATE Recipes
+SET Rating = (SELECT AVG(Rating) FROM (Ex. Recipe Name);)
+WHERE RecipeName=(Ex.RecipeName)
+
+//Display comments on a recipe's page
+SELECT Rating,Comments,User
+FROM (Ex. Recipe Name)
+WHERE Comments <> '';
